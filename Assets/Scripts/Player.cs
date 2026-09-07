@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     [Header("CORE")]
     [SerializeField] private CharacterController _controller;
+    [SerializeField] private Transform _cameraParent;
     [SerializeField] private Camera _camera;
 
     [Header("Look")]
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
 
 #if UNITY_EDITOR
         _camera.fieldOfView = _fieldOfView;
-        _camera.transform.localPosition = _cameraOffset;
+        //_camera.transform.localPosition = _cameraOffset;
 #endif
     }
 
@@ -84,7 +85,7 @@ public class Player : MonoBehaviour
         _cameraVerticalAngle -= mouseY;
         _cameraVerticalAngle = Mathf.Clamp(_cameraVerticalAngle, -90f, 90f);
 
-        _camera.transform.localRotation = Quaternion.Euler(_cameraVerticalAngle, 0, 0);
+        _cameraParent.localRotation = Quaternion.Euler(_cameraVerticalAngle, 0, 0);
         this.transform.Rotate(Vector3.up * mouseX);
     }
 
