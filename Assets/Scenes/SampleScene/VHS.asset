@@ -65,16 +65,16 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   quality:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.046
   clamp:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.1
 --- !u!114 &-6059719509559486535
 MonoBehaviour:
   m_ObjectHideFlags: 3

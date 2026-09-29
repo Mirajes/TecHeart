@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9213837855626005048}
   - component: {fileID: 8659677108397307926}
+  - component: {fileID: 7149740313189677151}
   m_Layer: 0
   m_Name: mgcrs_A-Tree
   m_TagString: Untagged
@@ -153,6 +154,29 @@ LODGroup:
     - renderer: {fileID: 5190013354454572226}
   m_Enabled: 1
   m_GlobalIlluminationLOD: 0
+--- !u!136 &7149740313189677151
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151360592867744120}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.9
+  m_Height: 11.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 4.89, z: 0}
 --- !u!1 &8489052489215810440
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,24 +3,20 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [Header("Links")]
-    public Camera Camera => _camera;
-
     [Header("CORE")]
     [SerializeField] private CharacterController _controller;
     [SerializeField] private Transform _cameraParent;
-    [SerializeField] private Camera _camera;
 
     [Header("Look")]
     [SerializeField] private float _mouseSensivity = 1f;
-    [SerializeField][Range(30, 113)] private float _fieldOfView = 90f;
     [SerializeField] private Vector3 _cameraOffset = new Vector3(0f, 1.2f, 0f);
     private Vector2 _cameraInput;
     private float _cameraVerticalAngle = 0f;
 
     [Header("Movement")]
     [SerializeField] private float _walkSpeed = 1f;
-    [SerializeField] private float _runSpeed = 3f; // ? need or not
+    [SerializeField] private float _runMultiplier = 3f; // ? need or not
+    private bool _isRunning;
     private Vector2 _moveInput;
     // maybe add _moveSpeed that need to be filled for max speed by time
 
@@ -39,11 +35,6 @@ public class Player : MonoBehaviour
 
         HandleJump();
         HandleMovement();
-
-#if UNITY_EDITOR
-        _camera.fieldOfView = _fieldOfView;
-        //_camera.transform.localPosition = _cameraOffset;
-#endif
     }
 
     #region Input
@@ -61,6 +52,11 @@ public class Player : MonoBehaviour
     {
         _isJumping = context.ReadValueAsButton();
         // maybe invoke action/unitask for double jump etc
+    }
+
+    public void OnSprintInput(InputAction.CallbackContext context)
+    {
+        _isRunning = context.ReadValueAsButton();
     }
     #endregion
 
@@ -99,10 +95,12 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
+        float moveSpeed = _isRunning ? _runMultiplier * _walkSpeed : _walkSpeed;
+
         Vector3 move = (
-            this.transform.right * _moveInput.x * _walkSpeed
+            this.transform.right * _moveInput.x * moveSpeed
             + this.transform.up * _velocity_Y
-            + this.transform.forward * _moveInput.y * _walkSpeed
+            + this.transform.forward * _moveInput.y * moveSpeed
             );
 
         _controller.Move(move * Time.deltaTime);
@@ -132,6 +130,8 @@ public class Player : MonoBehaviour
     {
         _inputs.Player.Move.performed += playerController.OnMoveInput;
         _inputs.Player.Move.canceled += playerController.OnMoveInput;
+        _inputs.Player.Sprint.performed += playerController.OnSprintInput;
+        _inputs.Player.Sprint.canceled += playerController.OnSprintInput;
 
         _inputs.Player.Look.performed += playerController.OnLookInput;
         _inputs.Player.Look.canceled += playerController.OnLookInput;
@@ -144,6 +144,8 @@ public class Player : MonoBehaviour
     {
         _inputs.Player.Move.performed -= playerController.OnMoveInput;
         _inputs.Player.Move.canceled -= playerController.OnMoveInput;
+        _inputs.Player.Sprint.performed -= playerController.OnSprintInput;
+        _inputs.Player.Sprint.canceled -= playerController.OnSprintInput;
 
         _inputs.Player.Look.performed -= playerController.OnLookInput;
         _inputs.Player.Look.canceled -= playerController.OnLookInput;
